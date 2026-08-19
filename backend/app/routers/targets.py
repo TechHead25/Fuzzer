@@ -1,0 +1,15 @@
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from typing import List
+from .. import schemas, models
+from ..database import get_db
+
+router = APIRouter(
+    prefix="/api/v1/targets",
+    tags=["targets"],
+    responses={404: {"description": "Not found"}},
+)
+
+@router.get("/", response_model=List[schemas.Target])
+def read_targets(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    return db.query(models.Target).offset(skip).limit(limit).all()

@@ -1,0 +1,34 @@
+# Build outputs and binaries
+*.exe
+*.dll
+*.lib
+*.pdb
+*.obj
+*.exp
+*.ilk
+*.iobj
+*.ipdb
+*.log
+*.zip
+*.tlog
+
+# DynamoRIO releases
+dynamorio/
+dynamorio_9/
+dynamorio_11/
+winafl/build64/
+target/sumatrapdf/out/
+target/sumatrapdf/vs2022/.vs/
+
+# Frontend / Backend dependencies & environments
+node_modules/
+.next/
+backend/venv/
+worker/venv/
+__pycache__/
+*.pyc
+
+# OS / IDE
+.vscode/
+.idea/
+Thumbs.db

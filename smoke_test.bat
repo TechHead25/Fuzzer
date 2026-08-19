@@ -1,0 +1,2 @@
+@echo off  
+C:\Projects\Fuzzer\winafl\build64\bin\Release\afl-fuzz.exe -i C:\Projects\Fuzzer\work\sumatra-pdf\input -o C:\Projects\Fuzzer\work\sumatra-pdf\output -D C:\Projects\Fuzzer\dynamorio\bin64 -w C:\Projects\Fuzzer\winafl\build64\bin\Release\winafl.dll -t 5000 -- -thread_coverage -coverage_module pdf_harness.exe -target_module pdf_harness.exe -target_offset 0x2fd500 -fuzz_iterations 2 -nargs 1 -call_convention ms64 -persistence_mode in_app -- C:\Projects\Fuzzer\target\sumatrapdf\out\rel64\pdf_harness.exe @@ 
