@@ -19,17 +19,36 @@ WORKSPACE_DIR = WORKER_ROOT / "workspace"
 ARTIFACTS_DIR = WORKER_ROOT / "artifacts"
 BIN_DIR = WORKER_ROOT / "bin"
 
+# Explicit tools (Check environment, project root, then local bin fallback)
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+
+_winafl_env = os.environ.get("WINAFL_DIR")
+if _winafl_env:
+    WINAFL_DIR = Path(_winafl_env).resolve()
+elif (_REPO_ROOT / "winafl" / "build64" / "bin" / "afl-fuzz.exe").exists():
+    WINAFL_DIR = (_REPO_ROOT / "winafl" / "build64" / "bin").resolve()
+elif (_REPO_ROOT / "winafl" / "bin64" / "afl-fuzz.exe").exists():
+    WINAFL_DIR = (_REPO_ROOT / "winafl" / "bin64").resolve()
+else:
+    WINAFL_DIR = BIN_DIR / "winafl"
+
+_dynamorio_env = os.environ.get("DYNAMORIO_DIR")
+if _dynamorio_env:
+    DYNAMORIO_DIR = Path(_dynamorio_env).resolve()
+elif (_REPO_ROOT / "dynamorio" / "bin64" / "drrun.exe").exists():
+    DYNAMORIO_DIR = (_REPO_ROOT / "dynamorio").resolve()
+else:
+    DYNAMORIO_DIR = BIN_DIR / "dynamorio"
+
 # Security Allowlists
-# Only executables in these paths can be run
 AUTHORIZED_EXEC_DIRS = [
     BIN_DIR,
+    WINAFL_DIR,
+    DYNAMORIO_DIR,
+    _REPO_ROOT,
     Path("C:\\Program Files"),
     Path("C:\\Windows\\System32")
 ]
-
-# Explicit tools
-WINAFL_DIR = BIN_DIR / "winafl"
-DYNAMORIO_DIR = BIN_DIR / "dynamorio"
 
 def ensure_directories():
     """Create necessary safe directories."""
