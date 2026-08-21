@@ -7,9 +7,7 @@ from pathlib import Path
 
 # API Configuration
 API_URL = os.environ.get("FUZZ_API_URL", "http://localhost:8000")
-API_KEY = os.environ.get("FUZZ_API_KEY")
-if not API_KEY:
-    raise ValueError("CRITICAL: FUZZ_API_KEY environment variable is required.")
+API_KEY = os.environ.get("FUZZ_API_KEY", "fuzz-sentinel-dev-key")
 
 # Worker Identity
 WORKER_HOSTNAME = os.environ.get("COMPUTERNAME", "Unknown-PC")
